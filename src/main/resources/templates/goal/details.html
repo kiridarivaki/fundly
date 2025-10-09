@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Goal Details</title>
+</head>
+<body>
+<h2>Goal Details</h2>
+<h3>Savings goal <span th:text="${savingsGoal.name}"></span>:</h3>
+<p th:text="${savingsGoal.description}"></p>
+<ul>
+    <li>
+        <label th:for="${savingsGoal.priority}">Priority category:</label>
+        <span th:text="${savingsGoal.priority.displayName}"></span>
+    </li>
+    <li>
+        <label th:for="${savingsGoal.currentAmount}">Currently gathered amount:</label>
+        <span th:text="${savingsGoal.currentAmount}"></span>
+    </li>
+    <li>
+        <label th:for="${savingsGoal.targetAmount}">Desired amount to reach goal:</label>
+        <span th:text="${savingsGoal.targetAmount}"></span>
+    </li>
+</ul>
+<a th:href="@{/goal/{id}/participants/add(id=${savingsGoal.id})}">Add a participant</a>
+<a th:href="@{/goal/edit/{id}(id=${savingsGoal.id})}">Edit</a>
+<form th:action="@{/goal/delete/{id}(id=${savingsGoal.id})}" method="post">
+    <button type="submit">Delete</button>
+</form>
+</body>
+</html>

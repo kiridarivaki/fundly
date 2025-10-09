@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Details</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+    <body>
+    <h2>Category Details</h2>
+    <h3>Category <span th:text="${expenseCategory.name}"> </span><span class="material-icons">[[${expenseCategory.iconIdentifier}]]</span>
+    </h3>
+    <p th:text="${expenseCategory.description}"></p>
+    <ul>
+        <li>Budget type: <span th:text="${expenseCategory.budgetType}"></span></li>
+    </ul>
+    <a th:href="@{/expense/add/categoryId(categoryId=${expenseCategory.id})}">Add expense to <span th:text="${expenseCategory.name}"></span></a>
+    <a th:href="@{/category/edit/{id}(id=${expenseCategory.id})}">Edit</a>
+    <a th:if="${expenseCategory.userId} != null" th:href="@{/category/delete/{id}(id=${expenseCategory.id})}">Delete</a>
+    </body>
+</html>

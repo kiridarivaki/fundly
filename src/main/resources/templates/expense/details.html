@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Expense Details</title>
+</head>
+<body>
+    <h2>Expense Details</h2>
+    <h3>Expense <span th:text="${expense.name}"></span>:</h3>
+    <p th:text="${expense.description}"></p>
+    <ul>
+        <li>
+            <label th:for="${expense.amount}">Amount</label>
+            <span th:text="${expense.amount}"></span>
+        </li>
+        <li>
+            <label th:for="${expense.date}">Date of occurrence</label>
+            <span th:text="${expense.date}"></span>
+        </li>
+        <li>
+            <label th:for="${expense.frequency}">Frequency of occurrence</label>
+            <span th:text="${expense.frequency.displayName}"></span>
+        </li>
+    </ul>
+    <a th:href="@{/expense/edit/{id}(id=${expense.id})}">Edit</a>
+    <form th:action="@{/expense/delete/{id}(id=${expense.id})}" method="post">
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>

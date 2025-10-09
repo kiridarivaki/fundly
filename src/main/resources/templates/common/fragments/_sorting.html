@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="sortControl(sortOptions, sortField, sortDir, searchTerm)">
+  <div style="display: flex; gap: 10px; align-items: center;">
+    <label for="sortFieldSelect">Sort Field:</label>
+
+    <select id="sortFieldSelect" name="sortField" onchange="updateSortField(this.value)">
+
+      <th:block th:each="option : ${sortOptions}">
+        <option th:value="${option.name().toLowerCase()}"
+                th:selected="${sortField == option.name().toLowerCase()}"
+                th:text="${#strings.capitalize(option.name().toLowerCase())}">
+          Date
+        </option>
+      </th:block>
+    </select>
+
+    <input type="hidden" id="currentSortDir" th:value="${sortDir}"/>
+    <input type="hidden" id="currentSearchTerm" th:value="${searchTerm}"/>
+  </div>
+</div>
+</html>

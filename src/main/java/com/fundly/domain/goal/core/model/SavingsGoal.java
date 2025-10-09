@@ -1,0 +1,50 @@
+package com.fundly.domain.goal.core.model;
+
+import com.fundly.common.model.BaseEntity;
+import com.fundly.domain.goal.core.model.enums.PriorityCategory;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+@Entity
+@Table(name = "savings_goal")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+public class SavingsGoal extends BaseEntity {
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "description")
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "priority")
+    private PriorityCategory priority;
+
+    @Column(name = "target_amount")
+    private BigDecimal targetAmount;
+
+    @Column(name = "current_amount", nullable = false)
+    private BigDecimal currentAmount = BigDecimal.ZERO;
+
+    @Column(name = "is_life_goal")
+    private boolean lifeGoal;
+
+    @Column(name = "user_id", nullable = false)
+    private UUID ownerId;
+
+    //region mappings
+    @ElementCollection
+    @CollectionTable(name = "savings_goal_collaborator", joinColumns = @JoinColumn(name = "goal_id"))
+    @Column(name = "user_id")
+    private List<UUID> participantsIds = new ArrayList<UUID>();
+    //endregion
+}
+

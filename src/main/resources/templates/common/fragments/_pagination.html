@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .disabled {
+            pointer-events: none;
+            cursor: default;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="paging(page, baseUrl, sortField, sortDir, searchTerm)">
+    <nav aria-label="Page navigation">
+        <ul>
+
+            <!-- Previous Button -->
+            <li>
+                <a th:href="@{${baseUrl}(
+                page=${page.number - 1},
+                size=${page.size},
+                sort=${sortField} + ',' + ${sortDir},
+                searchTerm=${searchTerm}
+            )}"
+                   th:classappend="${page.first} ? 'disabled' : ''">
+                    &laquo; Previous
+                </a>
+            </li>
+
+            <!-- Page Number Links -->
+            <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}">
+                <a th:href="@{${baseUrl}(
+                page=${i},
+                size=${page.size},
+                sort=${sortField} + ',' + ${sortDir},
+                searchTerm=${searchTerm}
+            )}"
+                   th:text="${i + 1}"
+                   th:classappend="${page.number == i} ? 'active-page' : ''">
+                </a>
+            </li>
+
+            <!-- Next Button -->
+            <li>
+                <a th:href="@{${baseUrl}(
+                page=${page.number + 1},
+                size=${page.size},
+                sort=${sortField} + ',' + ${sortDir},
+                searchTerm=${searchTerm}
+            )}"
+                   th:classappend="${page.last} ? 'disabled' : ''">
+                    Next &raquo;
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>

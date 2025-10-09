@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new goal</title>
+</head>
+<body>
+<h2>Create a new savings goal</h2>
+<form action="#" th:action="@{/goal/add}" th:object="${savingsGoal}" method="post">
+    <label th:for="*{name}">Name</label>
+    <input type="text" th:field="*{name}" placeholder="Enter a name for the goal..."/>
+    <span th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"
+          class="error">
+    </span>
+
+    <br>
+    <label th:for="*{description}">Description</label>
+    <input type="text" th:field="*{description}" placeholder="Enter a short description..."/>
+
+    <br>
+    Add the amount of money gathered for this goal:
+    <label th:for="*{targetAmount}">Current amount</label>
+    <input type="text" th:field="*{currentAmount}" placeholder="Enter the current amount..."/>
+    <span th:if="${#fields.hasErrors('currentAmount')}"
+          th:errors="*{currentAmount}"
+          class="error">
+    </span>
+
+    <br>
+    Add the amount of money needed to reach the goal:
+    <label th:for="*{targetAmount}">Target amount</label>
+    <input type="text" th:field="*{targetAmount}" placeholder="Enter the target amount..."/>
+    <span th:if="${#fields.hasErrors('targetAmount')}"
+          th:errors="*{targetAmount}"
+          class="error">
+    </span>
+
+    <br>
+    What is the priority of reaching this goal? Select an option.
+    <select type="text" th:field="*{priority}">
+        <option th:each="tempPriorityCategory : ${priorityCategories}" th:value="${tempPriorityCategory}" th:text="${tempPriorityCategory.displayName}"></option>
+    </select>
+
+    <br>
+    Is this a life goal?
+    <input type="checkbox" th:field="*{lifeGoal}"/>
+
+    <input type="submit" value="Add"/>
+</form>
+</body>
+</html>

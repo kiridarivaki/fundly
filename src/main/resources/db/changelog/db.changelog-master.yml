@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/1-create-app-tables.yml
+  - include:
+      file: db/changelog/2-create-security-tables.yml
+  - include:
+      file: db/changelog/3-add-fk-constraints.yml
+  - include:
+      file: db/changelog/4-seed-data.yml

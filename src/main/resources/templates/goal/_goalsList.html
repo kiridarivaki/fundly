@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="goalsListFragment">
+    <div th:if="${goals.isEmpty()}">
+        <p th:text="|No ${scope} goals found.|"></p>
+    </div>
+
+    <ul th:unless="${goals.isEmpty()}">
+        <li th:each="goal : ${goals}">
+            <div>
+                <p>
+                    <strong th:text="${goal.name}"></strong>
+                </p>
+            </div>
+            <a th:href="@{/goal/{id}(id=${goal.id})}">View details</a>
+        </li>
+    </ul>
+</div>
+</body>
+</html>

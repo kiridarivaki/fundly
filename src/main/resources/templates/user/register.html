@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+</head>
+<body>
+<h1>User Login</h1>
+  <form th:action="@{/user/register}" th:object="${user}" method="post" >
+    Email: <input type="text" th:field="*{email}"/>
+    <span th:if="${#fields.hasErrors('email')}"
+          th:errors="*{email}"
+          class="error">
+    </span>
+    Password: <input type="password" th:field="*{password}"/>
+    <span th:if="${#fields.hasErrors('password')}"
+          th:errors="*{password}"
+          class="error">
+    </span>
+    Confirm Password: <input type="password" th:field="*{confirmPassword}"/>
+    <span th:if="${#fields.hasErrors('confirmPassword')}"
+          th:errors="*{confirmPassword}"
+          class="error">
+    </span>
+    First Name: <input type="text" th:field="*{firstName}"/>
+    <span th:if="${#fields.hasErrors('firstName')}"
+          th:errors="*{firstName}"
+          class="error">
+    </span>
+    Last Name: <input type="text" th:field="*{lastName}"/>
+
+    <span th:if="${#fields.hasErrors('lastName')}"
+          th:errors="*{lastName}"
+          class="error">
+    </span>
+    Employment Status:
+    <select type="text" th:field="*{employmentStatus}">
+      <option th:each="tempStatus : ${employmentStatuses}" th:value="${tempStatus}" th:text="${tempStatus.displayName}"></option>
+    </select>
+    Monthly Allowance: <input type="text" th:field="*{monthlyAllowance}"/>
+    <span th:if="${#fields.hasErrors('monthlyAllowance')}"
+          th:errors="*{monthlyAllowance}"
+          class="error">
+    </span>
+    Local Currency:
+    <select type="text" th:field="*{localCurrency}">
+      <option th:each="tempCurrency : ${currencies}" th:value="${tempCurrency}" th:text="${tempCurrency}"></option>
+    </select>
+    <input type="submit" value="Submit"/>
+  </form>
+<p>Already have an account? <a th:href="@{/auth/login}"></a></p>
+</body>
+</html>

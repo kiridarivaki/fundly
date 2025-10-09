@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Manager</title>
+</head>
+<body>
+<div>
+  <h1>Expense Manager</h1>
+
+  <div>
+    <a th:href="@{/expense/history}">
+      Expenses History
+    </a>
+
+    <div class="relative inline-block text-left dropdown">
+      <button>
+        Expense Categories
+      </button>
+      <div class="dropdown-menu">
+        <div>
+          <a th:href="@{/category/add}">New</a>
+          <a th:href="@{/category/list}">Manage Existing</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative inline-block text-left dropdown">
+      <button>
+        New Expense
+      </button>
+      <div class="dropdown-menu">
+        <div>
+          <a th:href="@{/expense/add}">New</a>
+          <a th:href="@{/expense/list}">Manage Existing</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

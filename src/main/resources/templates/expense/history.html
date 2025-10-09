@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expense History</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    /* Basic styles for clarity and structure, matching previous context */
+    .p-8 { padding: 2rem; }
+    .sort-container {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .icon-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        background-color: white;
+        cursor: pointer;
+    }
+    .icon-button:hover {
+        background-color: #f0f0f0;
+    }
+    /* Table and general layout */
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+  </style>
+</head>
+<body class="p-8">
+
+<div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px;">
+
+  <!-- FIX: Added id="searchForm" so JavaScript can reference it -->
+  <form th:action="@{/expense/history}" method="get" id="searchForm" style="display: flex; gap: 10px;">
+    <label for="searchTermInput" style="display: none;">Search</label>
+    <input type="text" id="searchTermInput" name="searchTerm" th:value="${searchTerm}" placeholder="Search name or description"/>
+
+    <!-- Added Clear button, linked to the JS function -->
+    <button type="button" onclick="clearSearchAndSubmit()">Clear</button>
+
+    <button type="submit">Search</button>
+
+    <input type="hidden" id="sortHiddenInput" name="sort"
+           th:value="${sortField == null ? 'date,DESC' : (sortField + ',' + sortDir)}"/>
+  </form>
+
+  <div class="sort-container">
+
+    <!-- Sorting Field Fragment -->
+    <div th:replace="~{common/fragments/_sorting :: sortControl(
+          sortOptions=${sortOptions},
+          sortField=${sortField},
+          sortDir=${sortDir},
+          searchTerm=${searchTerm}
+    )}">
+    </div>
+
+    <!-- Direction Toggle Button -->
+    <button type="button"
+            onclick="toggleSortDirection()"
+            title="Toggle Sort Direction"
+            class="icon-button">
+      <i class="material-icons" th:text="${sortDir == 'ASC' ? 'arrow_upward' : 'arrow_downward'}">arrow_downward</i>
+    </button>
+  </div>
+</div>
+
+<div th:if="${expensesPaged != null and expensesPaged.content.size() > 0}">
+  <table>
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Amount</th>
+      <th>Created at</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="tempExpense : ${expensesPaged.content}">
+      <td th:text="${tempExpense.name}"></td>
+      <td th:text="${tempExpense.description}"></td>
+      <td th:text="${tempExpense.amount}"></td>
+      <td th:text="${#temporals.format(tempExpense.createdAt, 'MMM d, yyyy h:mm a')}"></td>
+      <td>
+        <a th:href="@{'/expense/edit/' + ${tempExpense.id}}" title="Edit">Edit</a>
+        <form th:action="@{/expense/delete/{id}(id=${expense.id})}" method="post">
+          <button type="submit">Delete</button>
+        </form>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div th:replace="~{common/fragments/_pagination :: paging(
+        page=${expensesPaged},
+        baseUrl='/expense/history',
+        sortField=${sortField},
+        sortDir=${sortDir},
+        searchTerm=${searchTerm}
+    )}">
+  </div>
+
+  <p>
+    Showing page <span th:text="${expensesPaged.number + 1}"></span> of <span th:text="${expensesPaged.totalPages}"></span>.
+  </p>
+</div>
+
+<div th:unless="${expensesPaged.content.size() > 0}">
+  <span>No expenses found!</span>
+</div>
+</body>
+<script th:src="@{/js/expense/history.js}"></script>
+</html>

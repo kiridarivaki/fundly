@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Expense Categories</title>
+</head>
+<body>
+<h1>Expenses History</h1>
+<div th:each="tempCategory : ${categoriesWithExpenses}">
+  <h3 th:text="${tempCategory.expenseCategory.name}">Category Name</h3>
+  <ul>
+    <li th:each="expense : ${tempCategory.expensesInCategory}">
+      <span th:text="${expense.description}">Expense Description</span> -
+      <span th:text="${expense.amount} + ' ' + ${user.localCurrency}"></span>
+      <a th:href="@{/expense/details/{id}(id=*{id}})}">Show details</a>
+    </li>
+  </ul>
+</div>
+</body>
+</html>

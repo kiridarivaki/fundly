@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<body>
+<h1>Edit Expense</h1>
+<form th:action="@{/expense/edit/{id}(id=*{id})}" th:object="${expense}" method="post">
+  <input type="hidden" th:field="*{id}" />
+
+  <ul></ul>
+  <label th:for="*{name}">Name</label>
+  <input type="text" th:field="*{name}" placeholder="Enter a name for the expense..."/>
+  <span th:if="${#fields.hasErrors('name')}"
+        th:errors="*{name}"
+        class="error">
+    </span>
+
+  <label th:for="*{description}">Description</label>
+  <input type="text" th:field="*{description}" placeholder="Enter a short description..."/>
+
+  <label th:for="*{amount}">Amount paid</label>
+  <input type="text" th:field="*{amount}" placeholder="Enter the amount..."/>
+  <span th:if="${#fields.hasErrors('amount')}"
+        th:errors="*{amount}"
+        class="error">
+    </span>
+
+  <br>
+  <select th:field="*{expenseCategory}">
+    <option th:each="tempCategory : ${expenseCategories}"
+            th:value="${tempCategory.id}"
+            th:text="${tempCategory.name}">
+    </option>
+  </select>
+
+  <br>
+  How frequently does this expense occur?
+  <div th:each="tempFrequency : ${frequencies}">
+    <input type="radio"
+           th:field="*{frequency}"
+           th:value="${tempFrequency}" />
+    <label th:for="frequency" th:text="${tempFrequency.displayName}"></label>
+  </div>
+
+  <br>
+  Is this an expense you want to make in the future?
+  <input type="checkbox" th:field="*{futureExpense}"/>
+
+  <br>
+  <input type="date" th:field="*{date}" placeholder="Enter the date it occurs/will occur..."/>
+  <br>
+
+  <input type="submit" value="Save Changes"/>
+</form>
+</body>
+</html>

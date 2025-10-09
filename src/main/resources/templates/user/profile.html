@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>User Profile</title>
+</head>
+<body>
+  <h1>User Profile</h1>
+  <p>First Name: <span th:text="user.firstName"></span></p>
+  <p>Last Name:<span th:text="{user.lastName}"></span></p>
+  <p>Employment Status: <span th:text="user.employmentStatus.displayName"></span></p>
+  <p>Monthly Allowance:<span th:text="{user.monthlyAllowance} {user.localCurrency}"></span></p>
+  <p>Local Currency: <span th:text="${user.monthlyAllowance} + ' ' + ${user.localCurrency}"></span></p>
+  <a th:href="@{/user/edit/{id}(id={user.id})}">Edit Profile</a>
+</body>
+</html>

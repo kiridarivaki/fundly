@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirm Category Deletion</title>
+</head>
+<body>
+<div>
+    <h2>Confirm Deletion</h2>
+
+    <p>
+        You are about to permanently delete the category:
+        <span th:text="${expenseCategory.name}">Category Name</span>.
+    </p>
+
+    <h3>
+        What action should be taken regarding its associated expenses?
+    </h3>
+
+    <form method="post" th:action="@{/category/delete/{id}(id=${expenseCategory.id})}">
+
+        <div>
+            <button type="submit"
+                    name="withExpenses"
+                    value="true">
+                Delete Category AND All Expenses
+            </button>
+
+            <button type="submit"
+                    name="withExpenses"
+                    value="false">
+                Delete Category ONLY (Keep Expenses)
+            </button>
+        </div>
+
+        <p>
+            <a th:href="@{/category/details/{id}(id=${expenseCategory.id})}">
+                Cancel
+            </a>
+        </p>
+    </form>
+</div>
+</body>
+</html>

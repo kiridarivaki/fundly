@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Goals List</title>
+</head>
+<style>
+    .collapsible-content {
+        display: none;
+        overflow: hidden;
+    }
+
+    .collapsible-content.expanded {
+        display: block;
+    }
+
+    .arrow {
+        display: inline-block;
+        transition: transform 0.2s;
+    }
+
+    .rotate-180 {
+        transform: rotate(180deg);
+    }
+</style>
+<body>
+<div>
+    <h1>Savings Goal Manager</h1>
+
+    <div>
+        <button class="toggle-goals"
+                data-scope="personal" aria-expanded="false" aria-controls="personal-goals-content">
+            My Goals
+            <span class="arrow">▼</span>
+        </button>
+        <div id="personal-goals-content" class="collapsible-content" aria-hidden="true" data-loaded="false">
+            <div>
+                <p class="loading-text">Click the title to load your personal goals...</p>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <button class="toggle-goals"
+                data-scope="shared" aria-expanded="false" aria-controls="shared-goals-content">
+            Shared Goals
+            <span class="arrow">▼</span>
+        </button>
+        <div id="shared-goals-content" class="collapsible-content" aria-hidden="true" data-loaded="false">
+            <div>
+                <p class="loading-text">Click the title to load shared goals...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/goal/list.js}"></script>
+</body>
+</html>

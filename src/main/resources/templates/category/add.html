@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a new expense category</title>
+</head>
+<body>
+<h2>Create a new expense category</h2>
+<form action="#" th:action="@{/category/add}" th:object="${expenseCategory}" method="post">
+    <input type="hidden" th:if="${fromPage != null}" name="from" th:value="${fromPage}" />
+    <label th:for="*{name}">Name</label>
+    <input type="text" th:field="*{name}" placeholder="Enter a name for the category..."/>
+    <span th:if="${#fields.hasErrors('name')}"
+          th:errors="*{name}"
+          class="error">
+    </span>
+
+    <br>
+    <label th:for="*{description}">Description</label>
+    <input type="text" th:field="*{description}" placeholder="Enter a short description..."/>
+
+    <br>
+    <label th:for="*{iconIdentifier}">Icon</label>
+    <input type="text" th:field="*{iconIdentifier}" placeholder="Enter the icon..."/>
+    <span th:if="${#fields.hasErrors('iconIdentifier')}"
+          th:errors="*{iconIdentifier}"
+          class="error">
+    </span>
+
+    <br>
+    Select the budget type of the expense category:
+    <select type="text" th:field="*{budgetType}">
+        <option th:each="tempBudgetType : ${budgetTypes}" th:value="${tempBudgetType}" th:text="${tempBudgetType.displayName}"></option>
+    </select>
+
+    <br>
+    <input type="submit" value="Add"/>
+</form>
+</body>
+</html>

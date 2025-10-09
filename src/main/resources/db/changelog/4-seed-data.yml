@@ -1,0 +1,75 @@
+databaseChangeLog:
+  - changeSet:
+      id: 4-seed-data
+      author: fundly
+      changes:
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Bills' }
+              - column: { name: budget_type, value: 'NEEDS' }
+              - column: { name: icon_identifier, value: 'receipt_long' }
+              - column: { name: description, value: 'Monthly or recurring utility and subscription payments.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Groceries' }
+              - column: { name: budget_type, value: 'NEEDS' }
+              - column: { name: icon_identifier, value: 'shopping_cart' }
+              - column: { name: description, value: 'Food and household items.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Dining out' }
+              - column: { name: budget_type, value: 'WANTS' }
+              - column: { name: icon_identifier, value: 'restaurant' }
+              - column: { name: description, value: 'Restaurant and takeout meals.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Entertainment' }
+              - column: { name: budget_type, value: 'WANTS' }
+              - column: { name: icon_identifier, value: 'movie' }
+              - column: { name: description, value: 'Leisure and fun activities.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Transportation' }
+              - column: { name: budget_type, value: 'NEEDS' }
+              - column: { name: icon_identifier, value: 'directions_car' }
+              - column: { name: description, value: 'Costs related to vehicle ownership and use, public transport tickets.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Self care' }
+              - column: { name: budget_type, value: 'WANTS' }
+              - column: { name: icon_identifier, value: 'spa' }
+              - column: { name: description, value: 'Personal well-being expenses.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Shopping' }
+              - column: { name: budget_type, value: 'WANTS' }
+              - column: { name: icon_identifier, value: 'storefront' }
+              - column: { name: description, value: 'Retail purchases like clothing, electronics, or home goods.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Medical expenses' }
+              - column: { name: budget_type, value: 'NEEDS' }
+              - column: { name: icon_identifier, value: 'health_and_safety' }
+              - column: { name: description, value: 'Healthcare and medication costs.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Loan repayment' }
+              - column: { name: budget_type, value: 'SAVINGS_AND_DEBT_REPAYMENT' }
+              - column: { name: icon_identifier, value: 'credit_score' }
+              - column: { name: description, value: 'Payments made towards loans.' }
+        - insert:
+            tableName: expense_category
+            columns:
+              - column: { name: name, value: 'Other' }
+              - column: { name: budget_type, value: 'WANTS' }
+              - column: { name: icon_identifier, value: 'category' }
+              - column: { name: description, value: 'Uncategorized expenses.' }

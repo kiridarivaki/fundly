@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Add participant to ${savingsGoal.name}</title>
+</head>
+<body>
+<h2>Add a new participant to <span th:text="${savingsGoal.name}"></span></h2>
+
+<div th:if="${errorMessage}" style="color:red;" role="alert">
+  <span th:text="${errorMessage}"></span>
+</div>
+<div th:if="${successMessage}" style="color:green;" role="alert">
+  <span th:text="${successMessage}"></span>
+</div>
+
+<form action="#" th:action="@{/goal/{id}/participants/add(id=${savingsGoal.id})}" th:object="${participant}" method="post">
+  <label th:for="*{email}">Name</label>
+  <input type="text" th:field="*{email}" placeholder="Enter the participant's email..."/>
+  <span th:if="${#fields.hasErrors('email')}"
+        th:errors="*{email}"
+        class="error">
+    </span>
+
+  <button type="submit">Add</button>
+</form>
+</body>
