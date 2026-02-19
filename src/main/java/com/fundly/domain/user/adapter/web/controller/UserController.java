@@ -2,9 +2,9 @@ package com.fundly.domain.user.adapter.web.controller;
 
 import com.fundly.common.enums.Currency;
 import com.fundly.common.exception.UserAlreadyExistsException;
+import com.fundly.domain.user.adapter.web.dto.RegisterRequest;
 import com.fundly.domain.user.core.model.enums.EmploymentStatus;
 import com.fundly.domain.user.core.port.in.UserService;
-import com.fundly.domain.user.adapter.web.dto.RegisterRequest;
 import com.fundly.domain.user.infrastructure.dto.UserDTO;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -78,7 +78,7 @@ public class UserController {
         return "expense/edit";
     }
 
-    @PostMapping("/edit/{userId}")
+    @PatchMapping("/edit/{userId}")
     public String updateUser(@PathVariable UUID userId,
                              @ModelAttribute("user") @Valid UserDTO updateUserDto,
                              BindingResult bindingResult,
