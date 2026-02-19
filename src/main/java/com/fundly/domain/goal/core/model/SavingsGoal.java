@@ -2,6 +2,7 @@ package com.fundly.domain.goal.core.model;
 
 import com.fundly.common.model.BaseEntity;
 import com.fundly.domain.goal.core.model.enums.PriorityCategory;
+import com.fundly.domain.user.core.model.AppUser;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -48,6 +49,10 @@ public class SavingsGoal extends BaseEntity {
 
     @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GoalActivity> activities = new ArrayList<GoalActivity>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private AppUser user;
     //endregion
 
     //region relationship helpers
