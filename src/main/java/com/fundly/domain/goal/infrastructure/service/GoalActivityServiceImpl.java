@@ -1,7 +1,6 @@
 package com.fundly.domain.goal.infrastructure.service;
 
 import com.fundly.common.exception.AlreadyParticipatingException;
-import com.fundly.common.exception.ForbiddenOperationException;
 import com.fundly.common.exception.SavingsGoalNotFoundException;
 import com.fundly.domain.auth.core.port.in.SecurityUserService;
 import com.fundly.domain.goal.adapter.web.dto.AddContributionRequest;
@@ -16,8 +15,8 @@ import com.fundly.domain.goal.core.port.out.GoalActivityRepository;
 import com.fundly.domain.goal.core.port.out.SavingsGoalRepository;
 import com.fundly.domain.goal.infrastructure.dto.GoalActivityDTO;
 import com.fundly.domain.goal.infrastructure.mapper.GoalActivityMapper;
+import com.fundly.domain.user.core.dto.UserDTO;
 import com.fundly.domain.user.core.port.in.UserService;
-import com.fundly.domain.user.infrastructure.dto.UserDTO;
 import com.fundly.domain.user.infrastructure.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
@@ -77,8 +76,8 @@ public class GoalActivityServiceImpl implements GoalActivityService {
             if (savedParticipants.contains(participantDto))
                 throw new AlreadyParticipatingException("User " + participantDto.getEmail() + " already exists in the participants list.");
 
-            savedGoal.getParticipantsIds().add(participantDto.getId());
-
+//            savedGoal.getParticipantsIds().add(participantDto.getId());
+//todo: update to use entity
             savingsGoalRepository.save(savedGoal);
 
             log.info("Successfully added participant {} to goal {}.", participantDto.getId(), id);
@@ -116,11 +115,11 @@ public class GoalActivityServiceImpl implements GoalActivityService {
 
             UserDTO userDto = securityUserService.getLoggedInUserInfo();
 
-            if (!userDto.getId().equals(savedGoal.getOwnerId()) && !savedGoal.getParticipantsIds().contains(userDto.getId())) {
-                log.warn("Failed attempt of user {} to contribute to savings goal {}.", userDto.getId(), id);
-                throw new ForbiddenOperationException("You do not have permission to modify this resource.");
-            }
-
+//            if (!userDto.getId().equals(savedGoal.getOwnerId()) && !savedGoal.getParticipantsIds().contains(userDto.getId())) {
+//                log.warn("Failed attempt of user {} to contribute to savings goal {}.", userDto.getId(), id);
+//                throw new ForbiddenOperationException("You do not have permission to modify this resource.");
+//            }
+//todo: update to use entity
             savedGoal.setCurrentAmount(savedGoal.getCurrentAmount().add(contributionDto.getAmount()));
 
             savingsGoalRepository.save(savedGoal);

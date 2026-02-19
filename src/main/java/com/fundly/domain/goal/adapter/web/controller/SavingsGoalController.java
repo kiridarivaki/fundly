@@ -5,7 +5,7 @@ import com.fundly.domain.goal.adapter.web.dto.UpdateSavingsGoalRequest;
 import com.fundly.domain.goal.core.model.enums.PriorityCategory;
 import com.fundly.domain.goal.core.port.in.SavingsGoalService;
 import com.fundly.domain.goal.infrastructure.dto.SavingsGoalDTO;
-import com.fundly.domain.user.infrastructure.dto.UserDTO;
+import com.fundly.domain.user.core.dto.UserDTO;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
