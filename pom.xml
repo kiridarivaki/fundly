@@ -23,6 +23,9 @@
         <lombok.version>1.18.38</lombok.version>
         <keyvault.version>4.5.0</keyvault.version>
         <azurecloud.version>4.5.0</azurecloud.version>
+        <jasperreports.version>7.0.3</jasperreports.version>
+        <jobrunr.version>5.1.7</jobrunr.version>
+        <azureidentity.version>1.18.0</azureidentity.version>
     </properties>
 
     <dependencies>
@@ -52,9 +55,19 @@
             <version>${azurecloud.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-identity</artifactId>
+            <version>${azureidentity.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.azure.spring</groupId>
             <artifactId>spring-cloud-azure-starter-keyvault</artifactId>
             <version>${keyvault.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-storage-blob</artifactId>
+            <version>12.14.0</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -115,6 +128,16 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>${jasperreports.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jobrunr</groupId>
+            <artifactId>jobrunr-spring-boot-starter</artifactId>
+            <version>${jobrunr.version}</version>
         </dependency>
     </dependencies>
 

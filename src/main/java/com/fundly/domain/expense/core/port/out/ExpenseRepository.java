@@ -32,6 +32,23 @@ public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
                                             @Param("keyword") String keyword,
                                             Pageable pageable);
 
-    @Query("SELECT SUM(e.amount) FROM Expense e WHERE e.user.id = :userId AND e.audit.createdAt BETWEEN :startDate AND :endDate")
+    @Query("SELECT COALESCE(SUM(e.amount),0) FROM Expense e WHERE e.user.id = :userId AND e.audit.createdAt BETWEEN :startDate AND :endDate")
     BigDecimal calculateTotalAmountSpentForPeriod(UUID userId, LocalDateTime startDate, LocalDateTime endDate);
+
+    @Query("""
+                SELECT NEW com.example.reports.ExpensesTrendDTO(
+                       CONCAT(FUNCTION('YEAR', e.audit.createdAt), '-', FUNCTION('MONTH', e.audit.createdAt)),
+                       COALESCE(SUM(e.amount), 0)
+                )
+                FROM Expense e
+                WHERE e.user.id = :userId 
+                  AND e.audit.createdAt BETWEEN :startDate AND :endDate
+                GROUP BY FUNCTION('YEAR', e.audit.createdAt), FUNCTION('MONTH', e.audit.createdAt)
+                ORDER BY FUNCTION('YEAR', e.audit.createdAt) ASC, FUNCTION('MONTH', e.audit.createdAt) ASC
+            """)
+    List<ExpensesTrendDTO> findTimePeriodTrendByUserIdAndDateRange(
+            @Param("userId") UUID userId,
+            @Param("startDate") LocalDateTime startDate,
+            @Param("endDate") LocalDateTime endDate
+    );
 }

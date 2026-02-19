@@ -7,6 +7,7 @@ import com.fundly.domain.expense.core.model.ExpenseCategory;
 import com.fundly.domain.goal.core.model.GoalActivity;
 import com.fundly.domain.goal.core.model.SavingsGoal;
 import com.fundly.domain.loan.core.model.Loan;
+import com.fundly.domain.report.core.model.Report;
 import com.fundly.domain.user.core.model.enums.EmploymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
@@ -64,6 +65,9 @@ public class AppUser extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<GoalActivity> goalActivities = new ArrayList<GoalActivity>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Report> reports = new ArrayList<Report>();
     //endregion
 
     //region relationship helpers
@@ -90,6 +94,11 @@ public class AppUser extends BaseEntity {
     public void addGoalEvent(GoalActivity goalActivity) {
         this.goalActivities.add(goalActivity);
         goalActivity.setUser(this);
+    }
+
+    public void addReportJobs(Report report) {
+        this.reports.add(report);
+        report.setUser(this);
     }
     //endregion
 }
