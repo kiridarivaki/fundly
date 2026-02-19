@@ -42,8 +42,10 @@ public class ExpenseCategory extends BaseEntity {
     private AppUser user;
     //endregion
 
+    //region relationship helpers
     public void addExpense(Expense expense) {
         this.expenses.add(expense);
         expense.setExpenseCategory(this);
     }
+    //endregion
 }

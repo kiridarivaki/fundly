@@ -32,15 +32,17 @@ public class SecurityUser {
     private List<Authority> authorities = new ArrayList<Authority>();
     //endregion
 
+    public SecurityUser(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+
+    //region relationship helpers
     public void addAuthority(Role role) {
         Authority authority = new Authority(role);
         authority.setSecurityUser(this);
         this.authorities.add(authority);
     }
-
-    public SecurityUser(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
+    //endregion
 }
 

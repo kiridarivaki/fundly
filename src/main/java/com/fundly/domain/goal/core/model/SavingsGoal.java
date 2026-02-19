@@ -45,6 +45,16 @@ public class SavingsGoal extends BaseEntity {
     @CollectionTable(name = "savings_goal_collaborator", joinColumns = @JoinColumn(name = "goal_id"))
     @Column(name = "user_id")
     private List<UUID> participantsIds = new ArrayList<UUID>();
+
+    @OneToMany(mappedBy = "goal", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<GoalActivity> activities = new ArrayList<GoalActivity>();
+    //endregion
+
+    //region relationship helpers
+    public void addActivity(GoalActivity activity) {
+        activities.add(activity);
+        activity.setGoal(this);
+    }
     //endregion
 }
 

@@ -62,6 +62,7 @@ public class AppUser extends BaseEntity {
     private List<GoalActivity> goalActivities = new ArrayList<GoalActivity>();
     //endregion
 
+    //region relationship helpers
     public void addExpense(Expense expense) {
         this.expenses.add(expense);
         expense.setUser(this);
@@ -81,4 +82,5 @@ public class AppUser extends BaseEntity {
         this.goalActivities.add(goalActivity);
         goalActivity.setUser(this);
     }
+    //endregion
 }

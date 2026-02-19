@@ -53,9 +53,11 @@ public class Loan extends BaseEntity {
     private List<LoanPayment> payments = new ArrayList<LoanPayment>();
     //endregion
 
+    //region relationship helpers
     public void addPayment(LoanPayment payment) {
         this.payments.add(payment);
         payment.setLoan(this);
     }
+    //endregion
 }
 
