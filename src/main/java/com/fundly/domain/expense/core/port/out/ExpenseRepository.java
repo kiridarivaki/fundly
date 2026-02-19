@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.math.BigDecimal;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,5 +33,5 @@ public interface ExpenseRepository extends JpaRepository<Expense, UUID> {
                                             Pageable pageable);
 
     @Query("SELECT SUM(e.amount) FROM Expense e WHERE e.user.id = :userId AND e.audit.createdAt BETWEEN :startDate AND :endDate")
-    BigDecimal calculateTotalAmountSpentForMonth(UUID userId, Instant startDate, Instant endDate);
+    BigDecimal calculateTotalAmountSpentForPeriod(UUID userId, LocalDateTime startDate, LocalDateTime endDate);
 }

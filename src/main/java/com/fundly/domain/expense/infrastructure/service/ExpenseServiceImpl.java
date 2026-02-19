@@ -22,9 +22,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -185,16 +184,13 @@ public class ExpenseServiceImpl implements ExpenseService {
         try {
             LocalDate today = LocalDate.now();
 
-            LocalDate startOfMonth = today.with(firstDayOfMonth());
-            Instant startDate = startOfMonth.atStartOfDay(ZoneId.systemDefault()).toInstant();
+            LocalDateTime startOfMonth = today.with(firstDayOfMonth()).atStartOfDay();
 
-            LocalDate startOfNextMonth = today.with(firstDayOfNextMonth());
-            Instant endDate = startOfNextMonth.atStartOfDay(ZoneId.systemDefault()).toInstant();
-
+            LocalDateTime endOfPeriod = today.with(firstDayOfNextMonth()).atStartOfDay();
 
             UUID userId = securityUserService.getLoggedInUserInfo().getId();
 
-            BigDecimal total = expenseRepository.calculateTotalAmountSpentForMonth(userId, startDate, endDate);
+            BigDecimal total = expenseRepository.calculateTotalAmountSpentForPeriod(userId, startOfMonth, endOfPeriod);
 
             log.info("Successfully calculated current month's expense total.");
 
