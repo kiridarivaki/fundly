@@ -14,7 +14,7 @@ import com.fundly.domain.expense.core.port.out.ExpenseRepository;
 import com.fundly.domain.expense.infrastructure.dto.ExpenseCategoryDTO;
 import com.fundly.domain.expense.infrastructure.mapper.ExpenseCategoryMapper;
 import com.fundly.domain.user.infrastructure.dto.UserDTO;
-import com.fundly.domain.user.infrastructure.mapper.UserMapper;
+import com.fundly.domain.user.infrastructure.mapper.UserDtoToModelMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,19 +27,19 @@ import java.util.UUID;
 public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
     private final ExpenseCategoryRepository categoryRepository;
     private final ExpenseCategoryMapper categoryMapper;
-    private final UserMapper userMapper;
+    private final UserDtoToModelMapper userDtoToModelMapper;
     private final SecurityUserService securityUserService;
     private final ExpenseRepository expenseRepository;
 
     public ExpenseCategoryServiceImpl(
             ExpenseCategoryRepository categoryRepository,
             ExpenseCategoryMapper categoryMapper,
-            UserMapper userMapper,
+            UserDtoToModelMapper userDtoToModelMapper,
             SecurityUserService securityUserService,
             ExpenseRepository expenseRepository) {
         this.categoryRepository = categoryRepository;
         this.categoryMapper = categoryMapper;
-        this.userMapper = userMapper;
+        this.userDtoToModelMapper = userDtoToModelMapper;
         this.securityUserService = securityUserService;
         this.expenseRepository = expenseRepository;
     }
@@ -93,7 +93,7 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
             ExpenseCategory category = categoryMapper.fromCreateDtoToEntity(createDto);
 
             UserDTO userDto = securityUserService.getLoggedInUserInfo();
-            category.setUser(userMapper.toEntity(userDto));
+            category.setUser(userDtoToModelMapper.toEntity(userDto));
 
             ExpenseCategory savedCategory = categoryRepository.save(category);
 

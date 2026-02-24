@@ -1,20 +1,19 @@
 package com.fundly.domain.goal.core.port.out;
 
 import com.fundly.domain.goal.core.model.SavingsGoal;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-public interface SavingsGoalRepository extends JpaRepository<SavingsGoal, UUID> {
-    @Query("SELECT g FROM SavingsGoal g WHERE g.ownerId =?1 AND g.participantsIds IS EMPTY")
+public interface SavingsGoalRepository {
+    Optional<SavingsGoal> findById(UUID id);
+
     List<SavingsGoal> findAllPersonalGoalsByOwnerId(UUID userId);
 
-    @Query("""
-             SELECT g FROM SavingsGoal g\s
-             WHERE (:userId MEMBER OF g.participantsIds)\s
-                OR (g.ownerId =?1 AND g.participantsIds IS NOT EMPTY)
-            \s""")
     List<SavingsGoal> findAllSharedGoalsByUserId(UUID userId);
+
+    SavingsGoal save(SavingsGoal goal);
+
+    void deleteById(UUID id);
 }

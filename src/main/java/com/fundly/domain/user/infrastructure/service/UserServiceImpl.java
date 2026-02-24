@@ -7,10 +7,10 @@ import com.fundly.domain.auth.core.port.in.SecurityUserService;
 import com.fundly.domain.expense.core.port.in.ExpenseCategoryService;
 import com.fundly.domain.user.core.model.AppUser;
 import com.fundly.domain.user.core.port.in.UserService;
-import com.fundly.domain.user.core.port.out.UserRepository;
-import com.fundly.domain.user.adapter.web.dto.RegisterRequest;
 import com.fundly.domain.user.infrastructure.dto.UserDTO;
-import com.fundly.domain.user.infrastructure.mapper.UserMapper;
+import com.fundly.domain.user.infrastructure.mapper.UserDtoToModelMapper;
+import com.fundly.domain.user.infrastructure.persistence.adapter.UserRepositoryImpl;
+import com.fundly.domain.user.ui.dto.RegisterRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,16 +20,16 @@ import java.util.UUID;
 @Service
 @Log4j2
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    private final UserRepositoryImpl userRepository;
     private final SecurityUserService securityUserService;
     private final ExpenseCategoryService categoryService;
-    private final UserMapper mapper;
+    private final UserDtoToModelMapper mapper;
 
     public UserServiceImpl(
-            UserRepository userRepository,
+            UserRepositoryImpl userRepository,
             SecurityUserService securityUserService,
             ExpenseCategoryService categoryService,
-            UserMapper mapper) {
+            UserDtoToModelMapper mapper) {
         this.userRepository = userRepository;
         this.securityUserService = securityUserService;
         this.categoryService = categoryService;

@@ -1,8 +1,8 @@
 package com.fundly.domain.user.core.port.in;
 
 
-import com.fundly.domain.user.adapter.web.dto.RegisterRequest;
 import com.fundly.domain.user.infrastructure.dto.UserDTO;
+import com.fundly.domain.user.ui.dto.RegisterRequest;
 
 import java.util.UUID;
 

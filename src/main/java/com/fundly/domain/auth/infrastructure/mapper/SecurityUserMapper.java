@@ -2,7 +2,7 @@ package com.fundly.domain.auth.infrastructure.mapper;
 
 import com.fundly.domain.auth.core.model.SecurityUser;
 import com.fundly.domain.auth.infrastructure.dto.SecurityUserDTO;
-import com.fundly.domain.user.adapter.web.dto.RegisterRequest;
+import com.fundly.domain.user.ui.dto.RegisterRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;

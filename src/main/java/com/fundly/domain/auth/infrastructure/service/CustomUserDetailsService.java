@@ -28,11 +28,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         SecurityUser securityUser = securityUserRepository.findByUsername(email)
                 .orElseThrow(() -> new UserNotFoundException("User not found with email " + email + " not found."));
 
-        AppUser appUser = userRepository.findByEmail(email)
+        AppUser appUserEntity = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("AppUser not found for security user " + email));
 
         log.info("User with email {} loaded successfully.", email);
-        
-        return new CustomUserDetails(securityUser, appUser);
+
+        return new CustomUserDetails(securityUser, appUserEntity);
     }
 }

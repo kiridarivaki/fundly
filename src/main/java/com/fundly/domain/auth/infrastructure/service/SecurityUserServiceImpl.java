@@ -6,9 +6,9 @@ import com.fundly.domain.auth.core.model.SecurityUser;
 import com.fundly.domain.auth.core.port.in.SecurityUserService;
 import com.fundly.domain.auth.core.port.out.SecurityUserRepository;
 import com.fundly.domain.auth.infrastructure.mapper.SecurityUserMapper;
-import com.fundly.domain.user.adapter.web.dto.RegisterRequest;
 import com.fundly.domain.user.infrastructure.dto.UserDTO;
-import com.fundly.domain.user.infrastructure.mapper.UserMapper;
+import com.fundly.domain.user.infrastructure.mapper.UserDtoToModelMapper;
+import com.fundly.domain.user.ui.dto.RegisterRequest;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,17 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
 public class SecurityUserServiceImpl implements SecurityUserService {
     private final SecurityUserRepository securityUserRepository;
     private final SecurityUserMapper securityUserMapper;
-    private final UserMapper userMapper;
+    private final UserDtoToModelMapper userDtoToModelMapper;
     private final PasswordEncoder passwordEncoder;
 
     public SecurityUserServiceImpl(
             SecurityUserRepository securityUserRepository,
             SecurityUserMapper securityUserMapper,
-            UserMapper userMapper,
+            UserDtoToModelMapper userDtoToModelMapper,
             PasswordEncoder passwordEncoder) {
         this.securityUserRepository = securityUserRepository;
         this.securityUserMapper = securityUserMapper;
-        this.userMapper = userMapper;
+        this.userDtoToModelMapper = userDtoToModelMapper;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -47,7 +47,7 @@ public class SecurityUserServiceImpl implements SecurityUserService {
                 throw new IllegalStateException("Invalid principal type.");
             }
 
-            UserDTO userDto = userMapper.toDto(userDetails.getAppUser());
+            UserDTO userDto = userDtoToModelMapper.toDto(userDetails.getAppUser());
 
             log.info("Logged in user's {} info loaded successfully.", userDto.getEmail());
 

@@ -15,9 +15,9 @@ import com.fundly.domain.goal.core.port.out.GoalActivityRepository;
 import com.fundly.domain.goal.core.port.out.SavingsGoalRepository;
 import com.fundly.domain.goal.infrastructure.dto.GoalActivityDTO;
 import com.fundly.domain.goal.infrastructure.mapper.GoalActivityMapper;
-import com.fundly.domain.user.core.dto.UserDTO;
 import com.fundly.domain.user.core.port.in.UserService;
-import com.fundly.domain.user.infrastructure.mapper.UserMapper;
+import com.fundly.domain.user.infrastructure.dto.UserDTO;
+import com.fundly.domain.user.infrastructure.mapper.UserDtoToModelMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
@@ -37,7 +37,7 @@ public class GoalActivityServiceImpl implements GoalActivityService {
     private final UserService userService;
     private final SecurityUserService securityUserService;
     private final GoalActivityMapper activityMapper;
-    private final UserMapper userMapper;
+    private final UserDtoToModelMapper userDtoToModelMapper;
     private final ApplicationEventPublisher eventPublisher;
 
     public GoalActivityServiceImpl(
@@ -47,7 +47,7 @@ public class GoalActivityServiceImpl implements GoalActivityService {
             UserService userService,
             SecurityUserService securityUserService,
             GoalActivityMapper activityMapper,
-            UserMapper userMapper,
+            UserDtoToModelMapper userDtoToModelMapper,
             ApplicationEventPublisher eventPublisher) {
         this.activityRepository = activityRepository;
         this.savingsGoalRepository = savingsGoalRepository;
@@ -55,7 +55,7 @@ public class GoalActivityServiceImpl implements GoalActivityService {
         this.userService = userService;
         this.securityUserService = securityUserService;
         this.activityMapper = activityMapper;
-        this.userMapper = userMapper;
+        this.userDtoToModelMapper = userDtoToModelMapper;
         this.eventPublisher = eventPublisher;
     }
 
@@ -88,7 +88,7 @@ public class GoalActivityServiceImpl implements GoalActivityService {
 
             GoalActivity goalActivity = GoalActivity.builder()
                     .goal(savedGoal)
-                    .user(userMapper.toEntity(userDto))
+                    .user(userDtoToModelMapper.toEntity(userDto))
                     .eventType(EventType.PARTICIPANT_ADDED)
                     .description(descriptionMessage)
                     .build();
@@ -128,7 +128,7 @@ public class GoalActivityServiceImpl implements GoalActivityService {
 
             GoalActivity goalActivity = GoalActivity.builder()
                     .goal(savedGoal)
-                    .user(userMapper.toEntity(userDto))
+                    .user(userDtoToModelMapper.toEntity(userDto))
                     .eventType(EventType.CONTRIBUTION)
                     .amount(contributionDto.getAmount())
                     .description(contributionDto.getDescription())
@@ -155,7 +155,7 @@ public class GoalActivityServiceImpl implements GoalActivityService {
 
             Pageable pageRequest = PageRequest.of(pageNumber, 5);
 
-            List<GoalActivity> activityHistory = activityRepository.findRecentByGoalIdWithUser(id, pageRequest);
+            List<GoalActivity> activityHistory = activityRepository.findRecentByGoalId(id, pageRequest);
 
             List<GoalActivityDTO> activityHistoryDto = activityMapper.toDtoList(activityHistory);
 

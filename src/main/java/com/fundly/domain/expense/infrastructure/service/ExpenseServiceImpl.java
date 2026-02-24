@@ -14,7 +14,7 @@ import com.fundly.domain.expense.core.port.out.ExpenseRepository;
 import com.fundly.domain.expense.infrastructure.dto.ExpenseDTO;
 import com.fundly.domain.expense.infrastructure.mapper.ExpenseMapper;
 import com.fundly.domain.user.infrastructure.dto.UserDTO;
-import com.fundly.domain.user.infrastructure.mapper.UserMapper;
+import com.fundly.domain.user.infrastructure.mapper.UserDtoToModelMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -37,19 +37,19 @@ public class ExpenseServiceImpl implements ExpenseService {
     private final ExpenseCategoryRepository categoryRepository;
     private final ExpenseMapper expenseMapper;
     private final SecurityUserService securityUserService;
-    private final UserMapper userMapper;
+    private final UserDtoToModelMapper userDtoToModelMapper;
 
     public ExpenseServiceImpl(
             ExpenseRepository expenseRepository,
             ExpenseCategoryRepository categoryRepository,
             SecurityUserService securityUserService,
             ExpenseMapper expenseMapper,
-            UserMapper userMapper) {
+            UserDtoToModelMapper userDtoToModelMapper) {
         this.expenseRepository = expenseRepository;
         this.categoryRepository = categoryRepository;
         this.securityUserService = securityUserService;
         this.expenseMapper = expenseMapper;
-        this.userMapper = userMapper;
+        this.userDtoToModelMapper = userDtoToModelMapper;
     }
 
     @Override
@@ -116,7 +116,7 @@ public class ExpenseServiceImpl implements ExpenseService {
             expense.setExpenseCategory(expenseCategory);
 
             UserDTO userDto = securityUserService.getLoggedInUserInfo();
-            expense.setUser((userMapper.toEntity(userDto)));
+            expense.setUser((userDtoToModelMapper.toEntity(userDto)));
 
             Expense savedExpense = expenseRepository.save(expense);
 

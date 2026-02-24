@@ -12,11 +12,11 @@ import com.fundly.domain.goal.core.port.out.SavingsGoalRepository;
 import com.fundly.domain.goal.infrastructure.dto.SavingsGoalDTO;
 import com.fundly.domain.goal.infrastructure.mapper.GoalActivityMapper;
 import com.fundly.domain.goal.infrastructure.mapper.SavingsGoalMapper;
-import com.fundly.domain.user.core.dto.UserDTO;
-import com.fundly.domain.user.core.model.AppUser;
 import com.fundly.domain.user.core.port.in.UserService;
 import com.fundly.domain.user.core.port.out.UserRepository;
-import com.fundly.domain.user.infrastructure.mapper.UserMapper;
+import com.fundly.domain.user.infrastructure.dto.UserDTO;
+import com.fundly.domain.user.infrastructure.mapper.UserDtoToModelMapper;
+import com.fundly.domain.user.infrastructure.persistence.entity.AppUserEntity;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -33,7 +33,7 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
     private final SavingsGoalMapper savingsGoalMapper;
     private final SecurityUserService securityUserService;
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
+    private final UserDtoToModelMapper userDtoToModelMapper;
 
     public SavingsGoalServiceImpl(
             SavingsGoalRepository savingsGoalRepository,
@@ -43,13 +43,13 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
             SecurityUserService securityUserService,
             UserService userService,
             UserRepository userRepository,
-            UserMapper userMapper,
+            UserDtoToModelMapper userDtoToModelMapper,
             ApplicationEventPublisher eventPublisher) {
         this.savingsGoalRepository = savingsGoalRepository;
         this.savingsGoalMapper = savingsGoalMapper;
         this.securityUserService = securityUserService;
         this.userRepository = userRepository;
-        this.userMapper = userMapper;
+        this.userDtoToModelMapper = userDtoToModelMapper;
     }
 
     @Override
@@ -182,9 +182,9 @@ public class SavingsGoalServiceImpl implements SavingsGoalService {
             List<UUID> participantIds = new ArrayList<>(savedGoal.getParticipantsIds());
             participantIds.add(savedGoal.getOwnerId());
 
-            List<AppUser> participants = userRepository.findAllByIdIn(participantIds);
+            List<AppUserEntity> participants = userRepository.findAllByIdIn(participantIds);
 
-            List<UserDTO> participantsDto = userMapper.toDtoList(participants);
+            List<UserDTO> participantsDto = userDtoToModelMapper.toDtoList(participants);
 
             log.info("Successfully fetched {} participants for goal {}.", participantsDto.size(), id);
 
